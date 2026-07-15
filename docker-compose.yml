@@ -1,0 +1,45 @@
+version: '3.9'
+
+services:
+  mongo:
+    image: mongo:7
+    container_name: mood-capsule-mongo
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+    # Local dev only — in production point MONGODB_URI at MongoDB Atlas instead
+    # and remove this service.
+
+  backend:
+    build:
+      context: ./backend
+    container_name: mood-capsule-backend
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    environment:
+      # Overrides .env when running via compose against the local mongo service
+      - MONGODB_URI=mongodb://mongo:27017
+      - MONGODB_DB_NAME=mood_capsule
+      - FRONTEND_ORIGIN=http://localhost:5173
+    ports:
+      - '8000:8000'
+    depends_on:
+      - mongo
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_BASE_URL: http://localhost:8000
+    container_name: mood-capsule-frontend
+    restart: unless-stopped
+    ports:
+      - '5173:80'
+    depends_on:
+      - backend
+
+volumes:
+  mongo_data:

@@ -1,0 +1,21 @@
+version: 1.0
+runtime: nodejs20
+build:
+  commands:
+    build:
+      - npm install
+      - npm run build
+      - npm install -g serve
+run:
+  runtime-version: 20
+  command: serve -s dist -l $PORT
+  network:
+    port: 8080
+    env: PORT
+  env:
+    - name: VITE_API_BASE_URL
+      value: https://<your-backend-app-runner-url>.awsapprunner.com
+# Note: VITE_ variables are baked in at BUILD time by Vite, so this env var
+# must also be set as a build-time variable in the App Runner console for
+# it to actually take effect. The Docker-based deploy (see ../frontend/Dockerfile)
+# handles this via --build-arg and is the recommended path for production.

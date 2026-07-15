@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #0A0A12;
+    background-image:
+      radial-gradient(60% 50% at 15% 0%, rgba(124,111,239,0.14) 0%, rgba(124,111,239,0) 60%),
+      radial-gradient(50% 40% at 85% 10%, rgba(232,118,143,0.10) 0%, rgba(232,118,143,0) 60%);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    background: rgba(124, 111, 239, 0.35);
+    color: #EDEAF6;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(155, 149, 179, 0.35) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: rgba(155, 149, 179, 0.35);
+    border-radius: 999px;
+  }
+
+  :focus-visible {
+    outline: 2px solid #7C6FEF;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/[0.04] backdrop-blur-xl border border-white/[0.08];
+  }
+
+  .glass-card {
+    @apply glass rounded-xl2 shadow-[0_8px_40px_rgba(0,0,0,0.35)];
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-capsule px-6 py-3 font-semibold text-void
+           bg-gradient-to-r from-dusk-violet via-ember-rose to-amber-glow
+           hover:brightness-110 active:brightness-95 transition-all duration-200
+           shadow-[0_4px_30px_rgba(124,111,239,0.35)];
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-capsule px-6 py-3 font-semibold
+           text-mist glass hover:bg-white/[0.08] transition-all duration-200;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-capsule px-4 py-2 text-sm font-medium
+           glass text-muted hover:text-mist hover:border-dusk-violet/50 hover:bg-white/[0.07]
+           transition-all duration-200 cursor-pointer select-none;
+  }
+
+  .chip-active {
+    @apply text-void bg-gradient-to-r from-dusk-violet via-ember-rose to-amber-glow border-transparent;
+  }
+
+  .input-field {
+    @apply w-full rounded-2xl glass px-4 py-3 text-mist placeholder:text-muted/70
+           focus:border-dusk-violet/60 focus:outline-none transition-colors duration-200;
+  }
+
+  .label-text {
+    @apply text-xs font-semibold uppercase tracking-[0.14em] text-muted;
+  }
+}
