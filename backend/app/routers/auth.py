@@ -76,7 +76,7 @@ async def start_guest(payload: GuestStartRequest):
     doc = {
         "name": payload.name,
         "age": payload.age,
-        "email": None,
+        "email":  f"{guest_id}@guest.local",
         "hashed_password": None,
         "guest_id": guest_id,
         "region": payload.region,
