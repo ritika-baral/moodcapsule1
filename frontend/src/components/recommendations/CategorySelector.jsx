@@ -16,10 +16,10 @@ export default function CategorySelector({ onSelect, loading }) {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35, delay: i * 0.04 }}
-            className={`group flex flex-col items-start gap-3 rounded-xl2 p-5 text-left transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50 ${
+            className={`group flex flex-col items-start gap-3 rounded-xl2 p-5 text-left shadow-soft transition-all duration-200 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 ${
               cat.premium
                 ? 'bg-secondary-bg border border-dusk-violet/30 hover:border-dusk-violet/60 hover:shadow-warm col-span-2 sm:col-span-3'
-                : 'glass hover:bg-secondary-bg/70 hover:border-dusk-violet/40'
+                : 'glass hover:bg-secondary-bg/70 hover:border-dusk-violet/40 hover:shadow-warm'
             }`}
           >
             <span

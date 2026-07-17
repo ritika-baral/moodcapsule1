@@ -104,7 +104,7 @@ export default function ChatWindow({ greeting, showReadyButton = true }) {
         <button
           type="submit"
           disabled={isStreaming || !input.trim()}
-          className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-dusk-violet text-white shadow-warm transition-all duration-200 hover:scale-105 hover:bg-ember-rose disabled:opacity-40 disabled:hover:scale-100"
+          className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-coffee text-white shadow-warm transition-all duration-200 hover:scale-105 hover:brightness-90 disabled:opacity-40 disabled:hover:scale-100"
           aria-label="Send"
         >
           <SendHorizontal size={17} />

@@ -40,6 +40,11 @@ export default {
         // Borders
         'lavender-border': withOpacity('--color-border'),
 
+        // Buttons — deliberately separate from the accent tokens above so
+        // CTAs can run deeper without changing the (protected) message
+        // bubble / avatar color.
+        coffee: withOpacity('--color-button'),
+
         // Status
         success: withOpacity('--color-success'),
         warning: withOpacity('--color-warning'),
@@ -58,9 +63,9 @@ export default {
         'capsule-glow': 'linear-gradient(160deg, rgba(166,124,82,0.9), rgba(141,110,99,0.85), rgba(201,168,124,0.72))',
       },
       boxShadow: {
-        soft: '0 10px 30px rgba(74,59,52,0.08)',
-        warm: '0 4px 20px rgba(166,124,82,0.16)',
-        lift: '0 14px 36px rgba(74,59,52,0.12)',
+        soft: '0 10px 28px rgba(63,46,36,0.14)',
+        warm: '0 6px 22px rgba(111,78,55,0.30)',
+        lift: '0 16px 40px rgba(63,46,36,0.20)',
       },
       keyframes: {
         float: {

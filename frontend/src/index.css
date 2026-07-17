@@ -4,36 +4,43 @@
 
 @layer base {
   :root {
-    /* ---- Mood Capsule design tokens (coffee house) -------------------- */
+    /* ---- Mood Capsule design tokens (vintage coffee house) ------------ */
     /* Stored as "R G B" triplets so Tailwind's opacity modifiers (e.g.
        bg-dusk-violet/40) keep working — see withOpacity() in tailwind.config.js */
 
-    /* Surfaces */
-    --color-bg: 245 240 234;            /* #F5F0EA background */
-    --color-bg-secondary: 236 228 219;  /* #ECE4DB secondary background */
-    --color-surface: 255 253 252;       /* #FFFDFC cards */
+    /* Surfaces — warm vintage paper, never pure white */
+    --color-bg: 246 236 217;            /* #F6ECD9 background */
+    --color-bg-secondary: 238 223 199;  /* #EEDFC7 secondary background / beige */
+    --color-surface: 248 240 227;       /* #F8F0E3 cards */
 
-    /* Text */
-    --color-text-primary: 74 59 52;     /* #4A3B34 */
-    --color-text-secondary: 117 102 94; /* #75665E */
+    /* Text — darker warm brown, increased contrast */
+    --color-text-primary: 63 46 36;     /* #3F2E24 */
+    --color-text-secondary: 90 68 54;   /* #5A4436 */
 
-    /* Accents */
-    --color-accent-primary: 166 124 82;   /* #A67C52 coffee brown */
-    --color-accent-secondary: 201 168 124;/* #C9A87C warm latte */
+    /* Accents — UNCHANGED from the first pass on purpose: these drive the
+       message bubbles, avatars, and typing indicator, which must stay
+       exactly as they were. */
+    --color-accent-primary: 166 124 82;   /* #A67C52 coffee brown (bubbles/avatars) */
+    --color-accent-secondary: 201 168 124;/* #C9A87C warm latte (typing dots) */
     --color-accent-highlight: 141 110 99; /* #8D6E63 muted mocha */
 
-    /* Borders */
-    --color-border: 221 209 198; /* #DDD1C6 */
+    /* Buttons — a separate, deeper token so CTAs can go darker without
+       dragging the (protected) bubble color along with them. */
+    --color-button: 111 78 55; /* #6F4E37 deep coffee brown */
+
+    /* Borders — more visible against the deeper cream surfaces */
+    --color-border: 203 180 140; /* #CBB48C */
 
     /* Status */
     --color-success: 151 169 124; /* #97A97C */
     --color-warning: 216 179 132; /* #D8B384 */
     --color-error: 201 140 138;   /* #C98C8C */
 
-    /* Page background gradient (warm paper / cream stationery) */
-    --gradient-bg-1: #F6F1EB;
-    --gradient-bg-2: #F2ECE5;
-    --gradient-bg-3: #ECE5DD;
+    /* Page background gradient — aged vintage journal paper */
+    --gradient-bg-1: #F6ECD9;
+    --gradient-bg-2: #F3E7D2;
+    --gradient-bg-3: #EEDFC7;
+    --gradient-bg-4: #E8D6BC;
   }
 
   html {
@@ -42,19 +49,25 @@
 
   body {
     background-color: var(--gradient-bg-1);
-    background-image: linear-gradient(180deg, var(--gradient-bg-1) 0%, var(--gradient-bg-2) 45%, var(--gradient-bg-3) 100%);
+    background-image: linear-gradient(
+      180deg,
+      var(--gradient-bg-1) 0%,
+      var(--gradient-bg-2) 35%,
+      var(--gradient-bg-3) 68%,
+      var(--gradient-bg-4) 100%
+    );
     background-attachment: fixed;
     color: rgb(var(--color-text-primary));
   }
 
   ::selection {
-    background: rgba(166, 124, 82, 0.25);
+    background: rgba(111, 78, 55, 0.28);
     color: rgb(var(--color-text-primary));
   }
 
   * {
     scrollbar-width: thin;
-    scrollbar-color: rgba(166, 124, 82, 0.35) transparent;
+    scrollbar-color: rgba(111, 78, 55, 0.4) transparent;
   }
 
   *::-webkit-scrollbar {
@@ -63,12 +76,12 @@
   }
 
   *::-webkit-scrollbar-thumb {
-    background: rgba(166, 124, 82, 0.35);
+    background: rgba(111, 78, 55, 0.4);
     border-radius: 999px;
   }
 
   :focus-visible {
-    outline: 2px solid rgb(var(--color-accent-primary));
+    outline: 2px solid rgb(var(--color-button));
     outline-offset: 2px;
     border-radius: 8px;
   }
@@ -84,8 +97,8 @@
 }
 
 @layer components {
-  /* Warm "premium stationery" surface — replaces the old frosted-glass look.
-     Kept the .glass name so no component markup needs to change. */
+  /* Warm vintage-paper surface. Kept the .glass name so no component
+     markup needs to change. */
   .glass {
     @apply bg-plum-light/90 backdrop-blur-md border border-lavender-border;
   }
@@ -96,14 +109,14 @@
 
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 rounded-capsule px-6 py-3 font-semibold text-white
-           bg-dusk-violet
-           hover:bg-ember-rose active:brightness-95 transition-all duration-200
+           bg-coffee
+           hover:brightness-90 active:brightness-95 transition-all duration-200
            shadow-warm;
   }
 
   .btn-secondary {
     @apply inline-flex items-center justify-center gap-2 rounded-capsule px-6 py-3 font-semibold
-           text-mist glass hover:bg-secondary-bg transition-all duration-200;
+           text-mist glass shadow-soft hover:bg-secondary-bg transition-all duration-200;
   }
 
   .chip {
@@ -116,12 +129,16 @@
     @apply text-white bg-dusk-violet border-transparent;
   }
 
+  /* Typing bar — was nearly invisible (heavily diluted fill, faint border).
+     Now a proper warm-cream surface with a visible edge and darker
+     placeholder text, per the "increase contrast" note. */
   .input-field {
-    @apply w-full rounded-2xl bg-secondary-bg/60 border border-lavender-border px-4 py-3 text-mist placeholder:text-muted/70
-           focus:border-dusk-violet/70 focus:bg-plum-light focus:outline-none transition-colors duration-200;
+    @apply w-full rounded-2xl bg-plum-light/85 border border-lavender-border px-4 py-3 text-mist placeholder:text-muted/90
+           shadow-soft
+           focus:border-coffee/70 focus:bg-plum-light focus:outline-none transition-colors duration-200;
   }
 
   .label-text {
-    @apply text-xs font-semibold uppercase tracking-[0.14em] text-muted;
+    @apply text-xs font-bold uppercase tracking-[0.14em] text-mist;
   }
 }
