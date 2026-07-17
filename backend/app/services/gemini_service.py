@@ -93,7 +93,11 @@ SAFETY RULE (never break): {safety_clause}
 
 {profile_block}
 
-Respond only with your conversational reply — no JSON, no headers, no markdown lists unless truly helpful.
+Formatting: write your normal conversational replies as natural flowing paragraphs — no bullet points. The \
+only exception is when you're offering the user a short set of concrete suggestions or options (e.g. a few \
+things they could try, watch, listen to, or do right now) — format just that set as a short markdown bullet \
+list (one "- " per line), then continue any surrounding reply as plain prose. Respond only with your \
+conversational reply — no JSON, no headers.
 """
 
 
@@ -303,18 +307,36 @@ async def generate_mood_capsule(
         }
 
 
-async def generate_greeting() -> str:
-    """A short, warm opening line shown when the conversation starts (non-streamed, fast)."""
+async def generate_greeting(user_name: Optional[str] = None) -> str:
+    """A short, warm opening line shown when the conversation starts (non-streamed, fast).
+
+    If we already know the user's name (a signed-up/logged-in user, or a guest who already
+    gave a name during onboarding), we skip asking for it and greet them by name instead so
+    they can move straight into talking about their mood.
+    """
     client = get_client()
+
+    if user_name:
+        system_instruction = (
+            "You are the voice of 'Mood Capsule', a warm and emotionally intelligent companion. "
+            f"You already know the user's name — it's {user_name}. Do NOT ask for their name or "
+            "introduce yourself again. Write ONE short, warm greeting (2 sentences max) that greets "
+            f"them by name and asks what mood they're in today, in the spirit of "
+            f'"Hi {user_name}! What mood are you in today?" — vary the phrasing naturally so it '
+            "doesn't feel scripted. No markdown, just plain text."
+        )
+    else:
+        system_instruction = (
+            "You are the voice of 'Mood Capsule', a warm and emotionally intelligent companion. "
+            "Write ONE short, warm greeting (2 sentences max) introducing yourself and asking for the "
+            "user's name so you can personalize things. No markdown, just plain text."
+        )
+
     response = await client.aio.models.generate_content(
         model=settings.GEMINI_MODEL,
         contents="Start the conversation.",
         config=types.GenerateContentConfig(
-            system_instruction=(
-                "You are the voice of 'Mood Capsule', a warm and emotionally intelligent companion. "
-                "Write ONE short, warm greeting (2 sentences max) introducing yourself and asking for the "
-                "user's name so you can personalize things. No markdown, just plain text."
-            ),
+            system_instruction=system_instruction,
             max_output_tokens=120,
         ),
     )

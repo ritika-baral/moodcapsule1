@@ -25,8 +25,8 @@ export default function Navbar() {
       <div className="glass border-x-0 border-t-0 backdrop-blur-2xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5 sm:px-8">
           <Link to="/" className="flex items-center gap-2 group">
-            <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-dusk-violet via-ember-rose to-amber-glow shadow-[0_0_20px_rgba(124,111,239,0.45)] transition-transform group-hover:scale-105">
-              <Sparkles size={15} className="text-void" />
+            <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-dusk-violet via-ember-rose to-amber-glow shadow-[0_4px_16px_rgba(199,184,232,0.35)] transition-transform group-hover:scale-105">
+              <Sparkles size={15} className="text-primary-text" />
             </span>
             <span className="font-display text-lg tracking-tight text-mist">Mood Capsule</span>
           </Link>

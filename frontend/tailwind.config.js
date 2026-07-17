@@ -5,15 +5,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        void: '#0A0A12',
-        plum: '#15121F',
-        'plum-light': '#1E1930',
-        mist: '#EDEAF6',
-        muted: '#9B95B3',
-        'dusk-violet': '#7C6FEF',
-        'ember-rose': '#E8768F',
-        'amber-glow': '#F3B559',
-        'teal-quiet': '#5FD3C4',
+        void: '#F8F5FB',
+        plum: '#F1ECF7',
+        'plum-light': '#FFFFFF',
+        mist: '#4D4758',
+        muted: '#7E778A',
+        'dusk-violet': '#C7B8E8',
+        'ember-rose': '#BCAEE0',
+        'amber-glow': '#AFC7E8',
+        'teal-quiet': '#AFC7E8',
+        'secondary-bg': '#F1ECF7',
+        'primary-text': '#4D4758',
+        'secondary-text': '#7E778A',
+        'lavender-border': '#E3DCEF',
       },
       fontFamily: {
         display: ['"Fraunces"', 'ui-serif', 'Georgia', 'serif'],
@@ -22,10 +26,9 @@ export default {
       },
       backgroundImage: {
         'aurora-gradient':
-          'radial-gradient(60% 60% at 20% 20%, rgba(124,111,239,0.35) 0%, rgba(124,111,239,0) 60%), ' +
-          'radial-gradient(50% 50% at 80% 30%, rgba(232,118,143,0.28) 0%, rgba(232,118,143,0) 60%), ' +
-          'radial-gradient(55% 55% at 50% 85%, rgba(243,181,89,0.22) 0%, rgba(243,181,89,0) 60%)',
-        'capsule-glow': 'linear-gradient(160deg, rgba(124,111,239,0.9), rgba(232,118,143,0.85), rgba(243,181,89,0.8))',
+          'radial-gradient(60% 60% at 20% 20%, rgba(199,184,232,0.25) 0%, rgba(199,184,232,0) 60%), ' +
+          'radial-gradient(50% 50% at 80% 30%, rgba(175,199,232,0.14) 0%, rgba(175,199,232,0) 60%)',
+        'capsule-glow': 'linear-gradient(160deg, rgba(199,184,232,0.9), rgba(188,174,224,0.85), rgba(175,199,232,0.72))',
       },
       keyframes: {
         float: {
@@ -45,8 +48,8 @@ export default {
           '100%': { backgroundPosition: '200% 0' },
         },
         breathe: {
-          '0%, 100%': { boxShadow: '0 0 40px 0 rgba(124,111,239,0.25)' },
-          '50%': { boxShadow: '0 0 70px 10px rgba(232,118,143,0.30)' },
+          '0%, 100%': { boxShadow: '0 0 32px 0 rgba(199,184,232,0.22)' },
+          '50%': { boxShadow: '0 0 52px 6px rgba(175,199,232,0.18)' },
         },
       },
       animation: {
@@ -57,7 +60,7 @@ export default {
         breathe: 'breathe 6s ease-in-out infinite',
       },
       borderRadius: {
-        xl2: '1.75rem',
+        xl2: '1.875rem',
         capsule: '999px',
       },
     },

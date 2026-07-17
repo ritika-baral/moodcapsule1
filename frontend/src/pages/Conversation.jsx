@@ -13,6 +13,7 @@ import MoodCapsuleCard from '../components/capsule/MoodCapsuleCard'
 import CapsuleActions from '../components/capsule/CapsuleActions'
 import { useAuth } from '../context/AuthContext'
 import { useChat } from '../context/ChatContext'
+import { useSlowLoadingLabel } from '../hooks/useSlowLoadingLabel'
 import { fetchGreeting, submitOnboarding } from '../api/chat'
 import { generateCapsule, getRecommendations, saveCapsule, saveRecommendation } from '../api/recommendations'
 import { CATEGORIES } from '../utils/constants'
@@ -37,6 +38,11 @@ export default function Conversation() {
   const [loadingRecs, setLoadingRecs] = useState(false)
   const [loadingCapsule, setLoadingCapsule] = useState(false)
   const [refining, setRefining] = useState(false)
+
+  // '' for the first ~2s (fast case looks exactly as before); after that,
+  // rotates through friendly status text until the request resolves.
+  const recsSlowLabel = useSlowLoadingLabel(loadingRecs)
+  const capsuleSlowLabel = useSlowLoadingLabel(loadingCapsule)
 
   useEffect(() => {
     if (user?.onboarding_complete && stage === 'onboarding') {
@@ -145,7 +151,7 @@ export default function Conversation() {
                 <p className="text-sm text-muted mb-6">Pick a category, or let me bring everything together.</p>
                 {loadingRecs ? (
                   <div className="flex justify-center py-16">
-                    <Loader label="Curating your picks" />
+                    <Loader label={recsSlowLabel || 'Curating your picks'} />
                   </div>
                 ) : (
                   <CategorySelector onSelect={handleSelectCategory} loading={loadingRecs} />
@@ -182,7 +188,7 @@ export default function Conversation() {
 
                 <div className="mt-12 flex justify-center">
                   <button onClick={handleGenerateCapsule} disabled={loadingCapsule} className="btn-primary">
-                    {loadingCapsule ? 'Sealing your capsule…' : 'Reveal my Mood Capsule'}
+                    {loadingCapsule ? capsuleSlowLabel || 'Sealing your capsule…' : 'Reveal my Mood Capsule'}
                   </button>
                 </div>
               </motion.div>

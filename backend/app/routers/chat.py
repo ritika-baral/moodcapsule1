@@ -14,9 +14,14 @@ router = APIRouter(prefix="/api/chat", tags=["chat"])
 
 
 @router.get("/greeting")
-async def greeting():
-    """A short warm AI greeting shown the moment the conversation screen opens."""
-    text = await gemini_service.generate_greeting()
+async def greeting(current_user: dict = Depends(get_current_user)):
+    """A short warm AI greeting shown the moment the conversation screen opens.
+
+    If the user already has a stored name (signed up, logged in, or a guest who
+    gave a name during onboarding), it's passed through so the greeting uses it
+    directly instead of asking for it again.
+    """
+    text = await gemini_service.generate_greeting(user_name=current_user.get("name"))
     return {"greeting": text}
 
 
@@ -141,4 +146,4 @@ async def get_session(session_id: str, current_user: dict = Depends(get_current_
     db = get_db()
     session = await _get_session(db, session_id, _user_key(current_user))
     session["_id"] = str(session["_id"])
-    return session
+    return session 

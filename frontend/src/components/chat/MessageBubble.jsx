@@ -1,6 +1,69 @@
 import { motion } from 'framer-motion'
 import { Sparkles } from 'lucide-react'
 
+// Splits AI text into paragraph / bullet-list blocks so that suggestion lists
+// (lines starting with "- ", "* ", or "• ") render as a real <ul>, while
+// normal conversational replies stay as flowing paragraphs.
+function renderContent(content) {
+  if (!content) return content
+
+  const lines = content.split('\n')
+  const blocks = []
+  let paragraph = []
+  let list = []
+
+  const flushParagraph = () => {
+    if (paragraph.length) {
+      blocks.push({ type: 'p', text: paragraph.join(' ') })
+      paragraph = []
+    }
+  }
+  const flushList = () => {
+    if (list.length) {
+      blocks.push({ type: 'ul', items: list })
+      list = []
+    }
+  }
+
+  for (const raw of lines) {
+    const line = raw.trim()
+    if (!line) {
+      flushParagraph()
+      continue
+    }
+    const bullet = line.match(/^[-*•]\s+(.*)/)
+    if (bullet) {
+      flushParagraph()
+      list.push(bullet[1])
+    } else {
+      flushList()
+      paragraph.push(line)
+    }
+  }
+  flushParagraph()
+  flushList()
+
+  // Keep the common case (a short plain-text message) rendering exactly as
+  // before — no extra wrapper markup.
+  if (blocks.length === 1 && blocks[0].type === 'p') {
+    return blocks[0].text
+  }
+
+  return blocks.map((block, i) =>
+    block.type === 'ul' ? (
+      <ul key={i} className="list-disc pl-5 space-y-1">
+        {block.items.map((item, j) => (
+          <li key={j}>{item}</li>
+        ))}
+      </ul>
+    ) : (
+      <p key={i} className={i > 0 ? 'mt-2' : ''}>
+        {block.text}
+      </p>
+    ),
+  )
+}
+
 export default function MessageBubble({ role, content }) {
   const isUser = role === 'user'
 
@@ -23,7 +86,7 @@ export default function MessageBubble({ role, content }) {
             : 'glass text-mist rounded-bl-md'
         }`}
       >
-        {content}
+        {renderContent(content)}
       </div>
     </motion.div>
   )

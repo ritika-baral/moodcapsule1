@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { ArrowRight, SendHorizontal } from 'lucide-react'
 import { useChat } from '../../context/ChatContext'
 import { useStreamChat } from '../../hooks/useStreamChat'
+import { useSlowLoadingLabel } from '../../hooks/useSlowLoadingLabel'
 import MessageBubble from './MessageBubble'
 import TypingIndicator from './TypingIndicator'
 import SuggestionChips from './SuggestionChips'
@@ -22,6 +23,11 @@ export default function ChatWindow({ greeting, showReadyButton = true }) {
   const { streamMessage } = useStreamChat()
   const [input, setInput] = useState('')
   const scrollRef = useRef(null)
+
+  // Stays '' for the first ~2s of a response (fast case behaves exactly as
+  // before); after that it rotates through friendly status text until the
+  // first token arrives and the TypingIndicator is swapped for real content.
+  const slowLabel = useSlowLoadingLabel(isStreaming)
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -65,7 +71,7 @@ export default function ChatWindow({ greeting, showReadyButton = true }) {
           {greeting && messages.length === 0 && <MessageBubble role="assistant" content={greeting} />}
           {messages.map((m, i) =>
             m.role === 'assistant' && m.content === '' && isStreaming && i === messages.length - 1 ? (
-              <TypingIndicator key={i} />
+              <TypingIndicator key={i} label={slowLabel} />
             ) : (
               <MessageBubble key={i} role={m.role} content={m.content} />
             ),
