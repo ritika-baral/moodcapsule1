@@ -118,7 +118,7 @@ export default function ChatWindow({ greeting, showReadyButton = true }) {
           onClick={() => setStage('category')}
           className="btn-secondary self-center group"
         >
-          I'm ready — show me what fits
+          Show My Curated Recommendations
           <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
         </motion.button>
       )}

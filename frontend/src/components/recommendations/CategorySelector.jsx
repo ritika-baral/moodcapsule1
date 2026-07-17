@@ -26,7 +26,7 @@ export default function CategorySelector({ onSelect, loading }) {
               className={`grid h-10 w-10 place-items-center rounded-full transition-transform duration-200 group-hover:scale-105 ${
                 cat.premium
                   ? 'bg-dusk-violet text-white'
-                  : 'bg-secondary-bg text-mist'
+                  : 'bg-[#6F4E37] text-white'
               }`}
             >
               <Icon size={18} />

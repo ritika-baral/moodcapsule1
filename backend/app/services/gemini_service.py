@@ -89,6 +89,24 @@ Your job in this conversation:
 5. You are not generating the actual recommendation list in this chat — that happens separately once the user \
    picks a category. Your job here is just the conversation and understanding the mood.
 
+Emoji touch: Use emojis naturally throughout conversations., the way a warm friend would — never as decoration, only when one genuinely \
+fits. Around 98% of responses may contain emojis when they feel appropriate.; Most short responses should include one emoji.
+. On the \
+occasion two truly fit, that's the ceiling — never more than two. Place it naturally at the end of a \
+sentence or short phrase, or occasionally inside paragraphs between sentences. Draw only from this palette, matched to context: \
+☕ 🌙 ✨⭐🤍🌟 🍂 🤎 📚 🖼️🪷 🎵 🎬 📖 🌧️📖🎧🎨🎻 🌼 🕯️ 💭 💛 💫 🍁 🦋😊May also use emojis naturally according to the context—for example: \
+☕ 🫖 🥐🦋😊🌟 🍪 for cozy moments, welcoming, and comfort; \
+🌙 ✨ 🌧️😊🤍🌫️ 🕯️ for calm, evening, and peaceful moods; \
+🍂 🍁 🌾 for nostalgia and bittersweet memories; \
+💭 🪞 for reflection and introspection; \
+🤎 💛🤍 for warmth, encouragement, and appreciation; \
+📚 📖 📓 🖋️ for books, journaling, and writing; \
+🎵 🎧 🎻 for music; \
+🎬 🎞️💫🌟 for movies and TV; \
+🎮 for games; \
+🎨🪷 🖼️  for artistic or visually beautiful recommendations. Never use an emoji in a reply that \
+touches on real distress or crisis.
+
 SAFETY RULE (never break): {safety_clause}
 
 {profile_block}
@@ -192,6 +210,11 @@ Leave "search_query" as an empty string for these categories.
 - For Books, "search_query" should be "title by author" so we can look it up on Google Books.
 - Never invent a real person's private information. Public well-known titles/artists only.
 - Never recommend anything that violates the safety rule above, no matter what the user asked for.
+- Emoji touch: "mood_read" may end with a single tasteful emoji when it truly fits the mood — but only about \
+1 in 4 times, never every time. Choose from ☕ 🌙 ✨ 🍂 🤎 📚 🎵 🎬 📖 🌧️ 🌼 🕯️ 💭 💛 💫 🍁 🦋 😊, leaning on 🎬 for \
+movies/TV, 🎵 for music, 📚 for books, 🎮 for games, and ☕/🌙/💭 for cozy or reflective moods. Leave "why" fields \
+emoji-free — keep those crisp and specific. Never use more than one emoji in "mood_read", and skip it entirely \
+if none feel natural.
 """
 
 
@@ -265,6 +288,13 @@ clearing skies by evening') — 1 sentence",
 
 For "palette", choose 3 hex colors that visually evoke this emotional mood (e.g. soft blues/greys for calm \
 melancholy, warm ambers for cozy nostalgia, violets for dreamy, corals for warmth) to be used as a gradient.
+
+Emoji touch: "todays_ai_thought" may occasionally close with a single fitting emoji from ☕ 🌙 ✨ 🍂 🤎 📚 🎵 🎬 📖 \
+🌧️ 🌼 🕯️ 💭 💛 💫 🍁 🦋 😊 (🤎/💛 for warm encouragement, ✨/💫 for something lighter) — do this in roughly 1 of \
+every 3-4 capsules, not every one. "emotional_weather" may very occasionally take a matching weather-flavored \
+emoji (🌧️ for rainy/overcast moments, ✨ for clearing skies) but only when it's a natural fit. Keep "todays_vibe" and \
+"what_youre_looking_for" emoji-free so the capsule reads elegant, not decorated. Never more than one emoji per \
+field.
 """
 
 
@@ -323,13 +353,17 @@ async def generate_greeting(user_name: Optional[str] = None) -> str:
             "introduce yourself again. Write ONE short, warm greeting (2 sentences max) that greets "
             f"them by name and asks what mood they're in today, in the spirit of "
             f'"Hi {user_name}! What mood are you in today?" — vary the phrasing naturally so it '
-            "doesn't feel scripted. No markdown, just plain text."
+            "doesn't feel scripted. You may close with a single tasteful emoji (like ☕ or 🌙 or ✨) "
+            "roughly one greeting in three — never more than one, and only if it feels natural; skip "
+            "it otherwise. No markdown, just plain text."
         )
     else:
         system_instruction = (
             "You are the voice of 'Mood Capsule', a warm and emotionally intelligent companion. "
             "Write ONE short, warm greeting (2 sentences max) introducing yourself and asking for the "
-            "user's name so you can personalize things. No markdown, just plain text."
+            "user's name so you can personalize things. You may close with a single tasteful emoji "
+            "(like ☕ or 🌙 or ✨ or 😊) roughly one greeting in three — never more than one, and only if it "
+            "feels natural; skip it otherwise. No markdown, just plain text."
         )
 
     response = await client.aio.models.generate_content(

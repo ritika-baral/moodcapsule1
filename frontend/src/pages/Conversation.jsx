@@ -134,10 +134,10 @@ export default function Conversation() {
                 <h1 className="font-display text-2xl text-mist mb-1">
                   {greeting ? "Let's talk" : 'Getting settled…'}
                 </h1>
-                <p className="text-sm text-muted mb-6">Tell me what's going on — I'm listening.</p>
+                <p className="text-sm text-muted mb-6">Share a little about how you're feeling and what you're looking for right now—then we'll curate recommendations that truly match your mood.✨</p>
                 <ChatWindow greeting={greeting} />
               </motion.div>
-            )}
+            )} 
 
             {stage === 'category' && (
               <motion.div key="category" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
