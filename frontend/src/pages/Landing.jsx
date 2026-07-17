@@ -39,7 +39,7 @@ export default function Landing() {
         </div>
       </section>
 
-      <footer className="relative border-t border-white/[0.06] py-8">
+      <footer className="relative border-t border-lavender-border py-8">
         <p className="text-center text-xs text-muted">
           Mood Capsule &middot; built with care, refined by your taste.
         </p>

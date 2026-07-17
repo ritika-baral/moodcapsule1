@@ -75,15 +75,15 @@ export default function MessageBubble({ role, content }) {
       className={`flex items-end gap-2.5 ${isUser ? 'flex-row-reverse' : ''}`}
     >
       {!isUser && (
-        <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-gradient-to-br from-dusk-violet via-ember-rose to-amber-glow">
-          <Sparkles size={12} className="text-void" />
+        <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-dusk-violet">
+          <Sparkles size={12} className="text-white" />
         </span>
       )}
       <div
         className={`max-w-[78%] rounded-2xl px-4 py-2.5 text-[0.95rem] leading-relaxed sm:max-w-[65%] ${
           isUser
-            ? 'bg-gradient-to-br from-dusk-violet/90 to-ember-rose/80 text-void font-medium rounded-br-md'
-            : 'glass text-mist rounded-bl-md'
+            ? 'bg-dusk-violet text-white font-medium rounded-br-md shadow-warm'
+            : 'bg-plum-light border border-lavender-border text-mist rounded-bl-md shadow-soft'
         }`}
       >
         {renderContent(content)}

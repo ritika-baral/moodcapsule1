@@ -60,7 +60,7 @@ export default function OnboardingForm() {
               key={t.id}
               onClick={() => setTab(t.id)}
               className={`flex-1 rounded-xl2 py-2 text-xs font-semibold transition-colors ${
-                tab === t.id ? 'bg-white/[0.08] text-mist' : 'text-muted hover:text-mist'
+                tab === t.id ? 'bg-secondary-bg text-mist' : 'text-muted hover:text-mist'
               }`}
               type="button"
             >
@@ -82,7 +82,7 @@ export default function OnboardingForm() {
                     {...register('name', { required: 'Name is required' })}
                   />
                 </div>
-                {errors.name && <p className="mt-1 text-xs text-ember-rose">{errors.name.message}</p>}
+                {errors.name && <p className="mt-1 text-xs text-error">{errors.name.message}</p>}
               </div>
             )}
 
@@ -102,7 +102,7 @@ export default function OnboardingForm() {
                     })}
                   />
                 </div>
-                {errors.age && <p className="mt-1 text-xs text-ember-rose">{errors.age.message}</p>}
+                {errors.age && <p className="mt-1 text-xs text-error">{errors.age.message}</p>}
               </div>
             )}
 
@@ -128,7 +128,7 @@ export default function OnboardingForm() {
                     {...register('email', { required: 'Email is required' })}
                   />
                 </div>
-                {errors.email && <p className="mt-1 text-xs text-ember-rose">{errors.email.message}</p>}
+                {errors.email && <p className="mt-1 text-xs text-error">{errors.email.message}</p>}
               </div>
             )}
 
@@ -147,11 +147,11 @@ export default function OnboardingForm() {
                     })}
                   />
                 </div>
-                {errors.password && <p className="mt-1 text-xs text-ember-rose">{errors.password.message}</p>}
+                {errors.password && <p className="mt-1 text-xs text-error">{errors.password.message}</p>}
               </div>
             )}
 
-            {serverError && <p className="text-xs text-ember-rose">{serverError}</p>}
+            {serverError && <p className="text-xs text-error">{serverError}</p>}
 
             <button type="submit" disabled={isSubmitting} className="btn-primary w-full group mt-2">
               {isSubmitting ? 'One moment…' : tab === 'login' ? 'Log In' : 'Continue'}

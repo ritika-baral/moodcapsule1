@@ -50,7 +50,7 @@ export default function RecommendationCard({ item, category, onSave, index = 0 }
       className="glass-card group flex flex-col overflow-hidden"
     >
       {!isTextForward && (
-        <div className="relative h-48 w-full overflow-hidden bg-gradient-to-br from-dusk-violet/25 via-ember-rose/20 to-amber-glow/20">
+        <div className="relative h-48 w-full overflow-hidden bg-secondary-bg">
           {imageUrl ? (
             <img
               src={imageUrl}
@@ -69,7 +69,7 @@ export default function RecommendationCard({ item, category, onSave, index = 0 }
 
       <div className="flex flex-1 flex-col gap-2 p-5">
         {isTextForward && (
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-white/[0.06] text-mist mb-1">
+          <span className="grid h-9 w-9 place-items-center rounded-full bg-secondary-bg text-mist mb-1">
             <Icon size={16} />
           </span>
         )}
@@ -97,10 +97,10 @@ export default function RecommendationCard({ item, category, onSave, index = 0 }
         {(item.genre || item.language) && !isTextForward && (
           <div className="mt-auto flex flex-wrap gap-1.5 pt-3">
             {item.language && (
-              <span className="rounded-capsule bg-white/[0.05] px-2.5 py-1 text-[0.7rem] text-muted">{item.language}</span>
+              <span className="rounded-capsule bg-secondary-bg px-2.5 py-1 text-[0.7rem] text-muted">{item.language}</span>
             )}
             {item.genre && (
-              <span className="rounded-capsule bg-white/[0.05] px-2.5 py-1 text-[0.7rem] text-muted">{item.genre}</span>
+              <span className="rounded-capsule bg-secondary-bg px-2.5 py-1 text-[0.7rem] text-muted">{item.genre}</span>
             )}
           </div>
         )}

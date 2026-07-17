@@ -25,8 +25,8 @@ export default function Navbar() {
       <div className="glass border-x-0 border-t-0 backdrop-blur-2xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5 sm:px-8">
           <Link to="/" className="flex items-center gap-2 group">
-            <span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-dusk-violet via-ember-rose to-amber-glow shadow-[0_4px_16px_rgba(199,184,232,0.35)] transition-transform group-hover:scale-105">
-              <Sparkles size={15} className="text-primary-text" />
+            <span className="grid h-8 w-8 place-items-center rounded-full bg-dusk-violet shadow-[0_4px_16px_rgba(166,124,82,0.35)] transition-transform duration-200 group-hover:scale-105">
+              <Sparkles size={15} className="text-white" />
             </span>
             <span className="font-display text-lg tracking-tight text-mist">Mood Capsule</span>
           </Link>
@@ -46,7 +46,7 @@ export default function Navbar() {
                 <span className="hidden text-sm text-muted sm:inline">Hi, {user.name?.split(' ')[0]}</span>
                 <button
                   onClick={handleLogout}
-                  className="grid h-9 w-9 place-items-center rounded-full glass text-muted transition-colors hover:text-ember-rose"
+                  className="grid h-9 w-9 place-items-center rounded-full glass text-muted transition-colors duration-200 hover:text-error"
                   aria-label="Log out"
                 >
                   <LogOut size={15} />

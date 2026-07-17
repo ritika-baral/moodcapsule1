@@ -18,15 +18,15 @@ export default function CategorySelector({ onSelect, loading }) {
             transition={{ duration: 0.35, delay: i * 0.04 }}
             className={`group flex flex-col items-start gap-3 rounded-xl2 p-5 text-left transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50 ${
               cat.premium
-                ? 'bg-gradient-to-br from-dusk-violet/20 via-ember-rose/15 to-amber-glow/15 border border-white/15 hover:brightness-110 col-span-2 sm:col-span-3'
-                : 'glass hover:bg-white/[0.07] hover:border-dusk-violet/40'
+                ? 'bg-secondary-bg border border-dusk-violet/30 hover:border-dusk-violet/60 hover:shadow-warm col-span-2 sm:col-span-3'
+                : 'glass hover:bg-secondary-bg/70 hover:border-dusk-violet/40'
             }`}
           >
             <span
-              className={`grid h-10 w-10 place-items-center rounded-full transition-transform group-hover:scale-105 ${
+              className={`grid h-10 w-10 place-items-center rounded-full transition-transform duration-200 group-hover:scale-105 ${
                 cat.premium
-                  ? 'bg-gradient-to-br from-dusk-violet via-ember-rose to-amber-glow text-void'
-                  : 'bg-white/[0.06] text-mist'
+                  ? 'bg-dusk-violet text-white'
+                  : 'bg-secondary-bg text-mist'
               }`}
             >
               <Icon size={18} />
