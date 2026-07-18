@@ -33,10 +33,10 @@ export default function CategorySelector({ onSelect, loading }) {
             </span>
             <div>
               <p className={`font-semibold ${cat.premium ? 'font-display text-lg text-mist' : 'text-mist'}`}>
-                {cat.premium ? '✨ Build My Capsule' : cat.label}
+                {cat.premium ? '✨ Build My Mood Mix' : cat.label}
               </p>
               {cat.premium && (
-                <p className="mt-1 text-sm text-muted">One perfectly curated set, across every category, tuned to today.</p>
+                <p className="mt-1 text-sm text-muted"> Get one perfectly curated set across every category, tuned to your current vibe🪄.</p>
               )}
             </div>
           </motion.button>

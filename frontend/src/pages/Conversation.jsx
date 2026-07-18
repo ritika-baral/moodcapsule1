@@ -9,13 +9,11 @@ import PreferencesForm from '../components/chat/PreferencesForm'
 import ChatWindow from '../components/chat/ChatWindow'
 import CategorySelector from '../components/recommendations/CategorySelector'
 import RecommendationGrid from '../components/recommendations/RecommendationGrid'
-import MoodCapsuleCard from '../components/capsule/MoodCapsuleCard'
-import CapsuleActions from '../components/capsule/CapsuleActions'
 import { useAuth } from '../context/AuthContext'
 import { useChat } from '../context/ChatContext'
 import { useSlowLoadingLabel } from '../hooks/useSlowLoadingLabel'
 import { fetchGreeting, submitOnboarding } from '../api/chat'
-import { generateCapsule, getRecommendations, saveCapsule, saveRecommendation } from '../api/recommendations'
+import { getRecommendations, saveRecommendation } from '../api/recommendations'
 import { CATEGORIES } from '../utils/constants'
 
 export default function Conversation() {
@@ -28,21 +26,15 @@ export default function Conversation() {
     setSelectedCategory,
     recommendations,
     setRecommendations,
-    moodCapsule,
-    setMoodCapsule,
-    resetForNewMood,
   } = useChat()
 
   const [greeting, setGreeting] = useState('')
   const [savingPrefs, setSavingPrefs] = useState(false)
   const [loadingRecs, setLoadingRecs] = useState(false)
-  const [loadingCapsule, setLoadingCapsule] = useState(false)
-  const [refining, setRefining] = useState(false)
 
   // '' for the first ~2s (fast case looks exactly as before); after that,
   // rotates through friendly status text until the request resolves.
   const recsSlowLabel = useSlowLoadingLabel(loadingRecs)
-  const capsuleSlowLabel = useSlowLoadingLabel(loadingCapsule)
 
   useEffect(() => {
     if (user?.onboarding_complete && stage === 'onboarding') {
@@ -84,31 +76,6 @@ export default function Conversation() {
       setLoadingRecs(false)
     }
   }
-
-  const handleGenerateCapsule = async () => {
-    setLoadingCapsule(true)
-    try {
-      const res = await generateCapsule(sessionId)
-      setMoodCapsule(res.mood_capsule)
-      setStage('capsule')
-    } finally {
-      setLoadingCapsule(false)
-    }
-  }
-
-  const handleRefine = async (refinementId) => {
-    setRefining(true)
-    try {
-      const res = await getRecommendations({ sessionId, category: selectedCategory, refinement: refinementId })
-      setRecommendations(res.result)
-      const capsuleRes = await generateCapsule(sessionId)
-      setMoodCapsule(capsuleRes.mood_capsule)
-    } finally {
-      setRefining(false)
-    }
-  }
-
-  const handleSaveCapsule = () => saveCapsule(sessionId)
 
   const handleSaveRecommendation = (category) => (item) =>
     saveRecommendation({ sessionId, category, recommendation: item })
@@ -185,45 +152,6 @@ export default function Conversation() {
                 ) : (
                   <RecommendationGrid result={recommendations} onSave={handleSaveRecommendation(selectedCategory)} />
                 )}
-
-                <div className="mt-12 flex justify-center">
-                  <button onClick={handleGenerateCapsule} disabled={loadingCapsule} className="btn-primary">
-                    {loadingCapsule ? capsuleSlowLabel || 'Sealing your capsule…' : 'Reveal my Mood Capsule'}
-                  </button>
-                </div>
-              </motion.div>
-            )}
-
-            {stage === 'capsule' && (
-              <motion.div key="capsule" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                <button
-                  onClick={() => setStage('recommendations')}
-                  className="mb-6 flex items-center gap-1.5 text-sm text-muted hover:text-mist transition-colors"
-                >
-                  <ArrowLeft size={14} /> Back to recommendations
-                </button>
-
-                <MoodCapsuleCard capsule={moodCapsule} userName={user?.name} />
-
-                <div className="mt-8">
-                  <CapsuleActions onRefine={handleRefine} onSave={handleSaveCapsule} refining={refining} />
-                </div>
-
-                <div className="mt-14">
-                  <p className="label-text mb-3 text-center">Keep talking, I'm here</p>
-                  <ChatWindow greeting="" showReadyButton={false} />
-                </div>
-
-                <div className="mt-10 flex justify-center">
-                  <button
-                    onClick={() => {
-                      resetForNewMood()
-                    }}
-                    className="btn-secondary"
-                  >
-                    Start a fresh mood check-in
-                  </button>
-                </div>
               </motion.div>
             )}
           </AnimatePresence>

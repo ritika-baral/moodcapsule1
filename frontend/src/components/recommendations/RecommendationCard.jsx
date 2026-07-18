@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { Bookmark, BookmarkCheck } from 'lucide-react'
 import * as Icons from 'lucide-react'
 import { CATEGORIES } from '../../utils/constants'
+import { getPlaceholderForCategory } from '../../utils/placeholders'
 
 function getImageUrl(media) {
   if (!media) return null
@@ -31,8 +32,13 @@ function getSubline(category, item, media) {
 
 export default function RecommendationCard({ item, category, onSave, index = 0 }) {
   const [saved, setSaved] = useState(false)
+  const [imgFailed, setImgFailed] = useState(false)
   const media = item.media
   const imageUrl = getImageUrl(media)
+  const placeholderUrl = getPlaceholderForCategory(category)
+  // Use the real poster if we have one and it hasn't failed to load;
+  // otherwise fall back to the category placeholder (if one exists).
+  const displayImageUrl = imageUrl && !imgFailed ? imageUrl : placeholderUrl
   const isTextForward = ['activities', 'journal_prompts', 'quotes', 'games'].includes(category)
   const categoryMeta = CATEGORIES.find((c) => c.id === category)
   const Icon = Icons[categoryMeta?.icon] || Icons.Sparkles
@@ -51,12 +57,13 @@ export default function RecommendationCard({ item, category, onSave, index = 0 }
     >
       {!isTextForward && (
         <div className="relative h-48 w-full overflow-hidden bg-secondary-bg">
-          {imageUrl ? (
+          {displayImageUrl ? (
             <img
-              src={imageUrl}
+              src={displayImageUrl}
               alt={item.title}
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
+              onError={() => setImgFailed(true)}
             />
           ) : (
             <div className="grid h-full w-full place-items-center">
