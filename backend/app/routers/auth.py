@@ -34,7 +34,6 @@ async def signup(payload: SignupRequest):
         "age": payload.age,
         "email": payload.email,
         "hashed_password": hash_password(payload.password),
-        "guest_id": None,
         "region": payload.region,
         "preferences": {
             "movie_languages": [],
