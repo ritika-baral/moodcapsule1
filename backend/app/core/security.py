@@ -6,7 +6,11 @@ from jose import jwt, JWTError
 from passlib.context import CryptContext
 
 from app.core.config import settings
+import bcrypt
+import passlib
 
+print("bcrypt version:", getattr(bcrypt, "__version__", "unknown"))
+print("passlib version:", passlib.__version__)
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
