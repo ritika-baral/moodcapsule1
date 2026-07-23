@@ -16,7 +16,7 @@ export const SUGGESTION_PROMPTS = [
   'Recommend something comforting.',
   "I want to watch an action movie.",
   "I don't know what I want.",
-  "Recommend some upheat dance hits.",
+  "Recommend some upbeat dance hits.",
   'I want to escape reality.',
   'Recommend something for tonight.',
   "I'm feeling nostalgic.",
