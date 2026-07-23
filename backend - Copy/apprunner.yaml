@@ -1,0 +1,20 @@
+version: 1.0
+runtime: python311
+build:
+  commands:
+    build:
+      - pip install -r requirements.txt
+run:
+  runtime-version: 3.11
+  command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+  network:
+    port: 8000
+    env: PORT
+  env:
+    - name: APP_ENV
+      value: production
+    # Set the remaining secrets/config (SECRET_KEY, MONGODB_URI, GEMINI_API_KEY,
+    # GEMINI_MODEL, TMDB_API_KEY, GOOGLE_BOOKS_API_KEY, SPOTIFY_CLIENT_ID/SECRET,
+    # LISTEN_NOTES_API_KEY, FRONTEND_ORIGIN) as App Runner environment variables /
+    # secrets in the console or via `apprunner update-service` — never commit real
+    # values here.

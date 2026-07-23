@@ -5,8 +5,7 @@ pymongo==4.8.0
 pydantic==2.9.2
 pydantic-settings==2.5.2
 python-jose[cryptography]==3.3.0
-passlib==1.7.4
-bcrypt==4.0.1
+passlib[bcrypt]==1.7.4
 python-multipart==0.0.9
 google-genai==2.3.0
 httpx==0.28.1
