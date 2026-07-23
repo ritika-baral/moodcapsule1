@@ -11,6 +11,14 @@ import passlib
 
 print("bcrypt version:", getattr(bcrypt, "__version__", "unknown"))
 print("passlib version:", passlib.__version__)
+
+pwd_context = CryptContext(
+    schemes=["bcrypt"],
+    deprecated="auto"
+)
+
+print("bcrypt version:", getattr(bcrypt, "__version__", "unknown"))
+print("passlib version:", passlib.__version__)
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
